@@ -18,7 +18,7 @@ This works great! However, as with any other process, the more steps you run, th
 
 *TL;DR* - Yes! Keep in mind that this is a hack, but it seems to work pretty well in our tests! These notes describe how to do it, but serious use of the technique would have to be validated much more throughly! This is because the model wasn't trained on the task we'll use it for, so results may not be as reliable.
 
-<video src='assets/demo.mp4' width=180></video>
+![](https://github.com/Vaibhavs10/translate-with-whisper/blob/main/assets/demo.gif)
 
 Alright, let's get to it! To demonstrate how this works, let's try to transcribe an audio in english (`en`) language to german (`de`), italian (`it`), spanish (`es`), dutch (`nl`) and french (`fr`).
 
