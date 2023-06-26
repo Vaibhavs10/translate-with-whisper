@@ -18,8 +18,6 @@ This works great! However, as with any other process, the more steps you run, th
 
 *TL;DR* - Yes! Keep in mind that this is a hack, but it seems to work pretty well in our tests! These notes describe how to do it, but serious use of the technique would have to be validated much more throughly! This is because the model wasn't trained on the task we'll use it for, so results may not be as reliable.
 
-![](https://github.com/Vaibhavs10/translate-with-whisper/blob/main/assets/demo.gif)
-
 Alright, let's get to it! To demonstrate how this works, let's try to transcribe an audio in english (`en`) language to german (`de`), italian (`it`), spanish (`es`), dutch (`nl`) and french (`fr`).
 
 For a more interactive experience you can follow along with this colab! <a target="_blank" href="https://colab.research.google.com/github/Vaibhavs10/translate-with-whisper/blob/main/whisper_en_to_any_transcription.ipynb">
@@ -29,10 +27,10 @@ For a more interactive experience you can follow along with this colab! <a targe
 Note: This tutorial assumes that you have run `huggingface-cli login` or used `notebook_login()` to authenticate with the hub. We only need this to access Common Voice, you can safely ignore this step if you run inference on your own audio files or public datasets.
 
 ```python
-!pip -q install transformers datasets huggingface_hub bitsandbytes accelerate
+!pip -q install transformers datasets huggingface_hub
 ```
 
-Let's instantiate our speech recognition pipeline! For the purpose of this demo we will use `bnb` and `accelerate` to load a Whisper-large-v2 checkpoint. If you have access to a larger GPU with more VRAM then you can remove the `model_kwargs` & `torch_dtype` 🤗 
+Let's instantiate our speech recognition pipeline! For the purpose of colab demo, we'll use a Whisper-large-v2 checkpoint in half-precision (`fp16`). If you have access to a larger GPU VRAM then remove the `torch_dtype` arg 🤗  
 ```python
 import torch
 from transformers import pipeline
@@ -75,7 +73,7 @@ Reading metadata...: 16354it [00:00, 31433.60it/s]
 'Joe Keaton disapproved of films, and Buster also had reservations about the medium.'
 ```
 
-Let's create a wee list of languages to transcribe to.
+Let's create a wee list of languages to transcribe too.
 ```python
 list_of_languages = ["de", "it", "es", "nl", "fr"]
 ```
@@ -154,7 +152,8 @@ Good luck! 🤝
 
 ## Next steps
 
-1. Run a benchmark on [FLoRES](https://huggingface.co/datasets/facebook/flores) dataset.
-2. Test the benchmark for [fine-tuned Whisper models](https://huggingface.co/models?other=whisper).
+1. Contrastive Search often results in over-generation, find strategies to reduce the over-generation.
+2. Run a benchmark on [FLoRES](https://huggingface.co/datasets/facebook/flores) dataset.
+3. Test the benchmark for [fine-tuned Whisper models](https://huggingface.co/models?other=whisper).
 
 Help is more than welcome! Just open an issue or PR and we can work together on this! 🤗
