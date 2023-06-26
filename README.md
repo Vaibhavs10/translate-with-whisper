@@ -150,11 +150,6 @@ Notice the subtle differences in the transcription, and how it still gets some t
 
 Good luck! 🤝
 
-## Bonus
-
-This also means, that you can use the same transcriptions and get word & sentence level timestamps as well. 🔥
-Check out this space here to know more!
-
 ## Next steps
 
 1. Run a benchmark on [FLoRES](https://huggingface.co/datasets/facebook/flores) dataset.
