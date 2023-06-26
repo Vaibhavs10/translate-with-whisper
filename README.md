@@ -75,7 +75,7 @@ Reading metadata...: 16354it [00:00, 31433.60it/s]
 'Joe Keaton disapproved of films, and Buster also had reservations about the medium.'
 ```
 
-Let's create a wee list of languages to transcribe too.
+Let's create a wee list of languages to transcribe to.
 ```python
 list_of_languages = ["de", "it", "es", "nl", "fr"]
 ```
