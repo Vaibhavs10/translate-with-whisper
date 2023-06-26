@@ -32,7 +32,7 @@ Note: This tutorial assumes that you have run `huggingface-cli login` or using `
 !pip -q install transformers datasets
 ```
 
-Let's instantiate our 
+Let's instantiate our speech recognition pipeline. For the purpose of demo we use the Whisper-medium checkpoint, however, for more serious cases, I'd recommend using the [Whisper-large-v2](https://huggingface.co/openai/whisper-large-v2) checkpoint!
 ```python
 from transformers import pipeline
 
@@ -101,6 +101,51 @@ Reading metadata...: 16354it [00:00, 36661.35it/s]
 ```
 
 Voila! it works! We successfully transcribed an english audio to other languages.
+
+Note: Some of these translations are a bit out of the line, however, we can fix these with the [Whisper-large-v2](https://huggingface.co/openai/whisper-large-v2) checkpoint and with some neat generation techniques like [constrastive search](https://huggingface.co/docs/transformers/generation_strategies#contrastive-search)!
+
+You can use contrastive search by providing `penalty_alpha` and `top_p` to the `generate_kwargs` in the pipeline. You can read more about it [here](https://huggingface.co/blog/introducing-csearch). 🤗 
+
+```python
+for lang in list_of_languages:
+    whisper_asr.model.config.forced_decoder_ids = (
+        whisper_asr.tokenizer.get_decoder_prompt_ids(
+            language=lang,
+            task="transcribe"
+            )
+        )
+    print(whisper_asr(
+        next(iter(common_voice_en))["audio"]["array"], 
+        generate_kwargs = 
+         {
+              "penalty_alpha": 0.6, 
+              "top_k": 5,
+         }
+        )["text"])
+```
+
+output:
+```
+Reading metadata...: 16354it [00:00, 100304.67it/s]
+ Joe Keaton enthüftete Filme und Buster hatte Reservativen des Medien-Prozesses.
+Reading metadata...: 16354it [00:00, 93428.54it/s]
+ Joe Keaton disapprovato di film e Buster aveva riservazioni sui media.
+Reading metadata...: 16354it [00:00, 56266.96it/s]
+ Joe Keaton desapropó de filmes y Buster también tenía reservas sobre el medio.
+Reading metadata...: 16354it [00:00, 90462.27it/s]
+ Joe Keaton verliep de film en Buster had ook regeven over het media.
+Reading metadata...: 16354it [00:00, 96229.24it/s]
+ Joe Keaton s'enestime de la cinémathie et Buster a des réservations au sujet des médias.
+```
+
+Notice the subtle differences in the transcription, it still gets some of them wrong tho. For your actual use-case, I'd recommend tuning these parameters a bit or use one of the fine-tuned models on the hub.
+
+Good luck! 🤝
+
+## Bonus
+
+This also means, that you can use the same transcriptions and get word & sentence level timestamps as well. 🔥
+Check out this space here to know more!
 
 ## Next steps
 
