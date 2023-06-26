@@ -20,7 +20,9 @@ This works great, however, as with any process, the more the number of steps, th
 
 Alright let's get to it! Let's first try to transcribe an audio in english (`en`) language to german (`de`), italian (`it`), spanish (`es`), dutch (`nl`) and french (`fr`).
 
-You can also follow along with this linked Colab for a more interactive experience!
+Want a more interactive experience! Follow along with this colab! <a target="_blank" href="https://colab.research.google.com/github/Vaibhavs10/translate-with-whisper/blob/main/whisper_en_to_any_transcription.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a>
 
 Note: This tutorial assumes that you have run `huggingface-cli login` or using `notebook_login()` to authenticate with the hub, we only need it to access Common Voice. You can safely ignore it if you are running inference on different audio file/ dataset.
 
@@ -38,7 +40,7 @@ whisper_asr = pipeline(
 ```
 
 To keep things simple, we'll use the Common Voice dataset from the 🤗 Hub via `streaming` mode & resample the audio to 16KHz as expected by Whisper.
-```
+```python
 from datasets import load_dataset
 from datasets import Audio
 
