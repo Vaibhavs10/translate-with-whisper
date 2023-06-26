@@ -22,9 +22,15 @@ Heads-up, this is pretty much a hack, the model wasn't trained on this objective
 
 Alright let's get to it. Let's first try to transcribe an audio in english (`en`) language to german (`de`), italian (`it`), spanish (`es`), dutch (`nl`) and french (`fr`).
 
+Let's set up our development environment! 
+
+Note: This tutorial assumes that you have run `huggingface-cli login` or using `notebook_login()` to authenticate with the hub, we only need it to access Common Voice. You can safely ignore it if you are running inference on different audio file/ dataset.
+
 ```python
-!pip -q install transformers datasets huggingface_hub
+!pip -q install transformers datasets
 ```
+
+Let's instantiate our 
 ```python
 from transformers import pipeline
 
@@ -33,6 +39,7 @@ whisper_asr = pipeline(
 )
 ```
 
+To keep things simple, we'll use the Common Voice dataset from the 🤗 Hub via `streaming` mode & resample the audio to 16KHz as expected by Whisper.
 ```
 from datasets import load_dataset
 from datasets import Audio
@@ -47,6 +54,7 @@ common_voice_en = common_voice_en.cast_column("audio",
                                               Audio(sampling_rate=16000))
 ```
 
+Since we cannot render audio here, let's take a look at the transcription.
 ```python
 next(iter(common_voice_en))["sentence"]
 ```
@@ -57,10 +65,14 @@ Reading metadata...: 16354it [00:00, 31433.60it/s]
 'Joe Keaton disapproved of films, and Buster also had reservations about the medium.'
 ```
 
+Let's create a wee list of languages to transcribe too.
 ```python
 list_of_languages = ["de", "it", "es", "nl", "fr"]
 ```
 
+Time for the magic sauce, here, we essentially force Whisper to decode in the specific language. Because Whisper was trained on 600K+ hours of data it is able to do so fairly well.
+
+So the only change you'd need to make to make this happen would be to set the task as `transcribe` and change the target language.
 ```python
 for lang in list_of_languages:
     whisper_asr.model.config.forced_decoder_ids = (
@@ -85,6 +97,8 @@ Reading metadata...: 16354it [00:00, 46689.15it/s]
 Reading metadata...: 16354it [00:00, 36661.35it/s]
  Joe Keaton s'est dévoilé de la film et Buster avait aussi des réservations sur le milieu.
 ```
+
+Voila! it works! We successfully transcribed an english audio to other languages.
 
 ## Next steps
 
