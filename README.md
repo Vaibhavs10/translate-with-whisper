@@ -1,26 +1,28 @@
-# ⚠️ EXPERIMENTAL: Translate audio to any language w/ 🤗 Transformers
+# ⚠️ EXPERIMENTAL: Transcribe audio to any language w/ 🤗 Transformers
 
-Whisper, released by OpenAI in 2022, till date has a near-SoTA performance across English & Multilingual benchmarks. 
+[Whisper](https://openai.com/research/whisper), released by OpenAI in late 2022, till date has a near-SoTA performance across English & Multi-lingual benchmarks. 
 
-Whisper was trained to do two key speech recognition tasks:
+The model was trained to do two key speech recognition tasks:
 1. Transcribe a given audio in its base language. i.e. take the audio in language "X" and transcribe it.
 2. Directly translate an audio to English. i.e. take audio in language "X" and transcribe in English.
 
-As the world grows more and more connected, the need for high quality content is ever-so-increasing. One of the ways to make content, specially audio, more accessible is by transcribing it to different languages there by ensuring that the knowledge is still spread.
+As the world grows more and more connected, the need for high quality content is ever-so-increasing. One of the ways to make content, specially audio, more accessible is by transcribing it into different languages there by ensuring that the knowledge is still spread. ⚡️
 
 The typical workflow for transcribing from audio in language "X" to another language right now is as follows:
 1. Transcribe/ Translate the audio in language "X" to English. (Base Whisper behaviour)
 2. Translate the transcriptions from language "X" to another language. (Typically done with a LLM, you can also use GPT-3.5/4)
 
-This works great, however, as with any process that exists, the more the number of steps needed to reach the end-result, the more the number of chances for error to creep.
+This works great, however, as with any process, the more the number of steps, the more are chances for error creep.
 
 ## But, can we transcribe from language "X" to "Y" in one step?
 
-TL;DR - Yes! the hack seems to work, however, needs to be validated much more throughly!
+*TL;DR* - Yes! the hack seems to work, however, needs to be validated much more throughly!
 
-Heads-up, this is pretty much a hack, the model wasn't trained on this objective, so the results may not be as reliable.
+Heads-up, this is pretty much a hack, the model wasn't trained on this specific objective, so the results may not be as reliable.
 
 Alright let's get to it. Let's first try to transcribe an audio in english (`en`) language to german (`de`), italian (`it`), spanish (`es`), dutch (`nl`) and french (`fr`).
+
+You can also follow along with this linked Colab for a more interactive experience!
 
 Let's set up our development environment! 
 
@@ -102,5 +104,7 @@ Voila! it works! We successfully transcribed an english audio to other languages
 
 ## Next steps
 
-1. Run a benchmark on FLoRES.
-2. Test the benchmark for fine-tuned Whisper models.
+1. Run a benchmark on [FLoRES](https://huggingface.co/datasets/facebook/flores) dataset.
+2. Test the benchmark for [fine-tuned Whisper models](https://huggingface.co/models?other=whisper).
+
+Help is more than welcome, IMO, open an issue/ PR and we can work together on this! 🤗
