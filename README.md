@@ -40,11 +40,10 @@ whisper_asr = pipeline(
     model="openai/whisper-large-v2",
     torch_dtype=torch.float16,
     device_map="auto", 
-    model_kwargs=
-     {
-          "load_in_8bit": True
-          }
-    )
+    model_kwargs= {
+        "load_in_8bit": True
+    }
+)
 ```
 
 To keep things simple, we'll use the Common Voice dataset from the 🤗 Hub in `streaming` mode & resample the audio to 16KHz as expected by Whisper.
